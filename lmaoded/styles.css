@@ -1,0 +1,444 @@
+/* Base Styles */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --foreground-color: #212529;
+    --toolbar-bg: #ffffff;
+    --toolbar-text: #333333;
+    --comic-bg: #e9ecef;
+    --dropdown-bg: #ffffff;
+    --dropdown-hover: #f1f1f1;
+    --bubble-bg: #ffffff;
+    --bubble-border: #000000;
+    --thought-bubble-bg: #f0f0f0;
+    --narrator-bubble-bg: #e6e6e6;
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: #121212;
+    --foreground-color: #f8f9fa;
+    --toolbar-bg: #1e1e1e;
+    --toolbar-text: #ffffff;
+    --comic-bg: #2c2c2c;
+    --dropdown-bg: #333333;
+    --dropdown-hover: #444444;
+    --bubble-bg: #2c2c2c;
+    --bubble-border: #ffffff;
+    --thought-bubble-bg: #3a3a3a;
+    --narrator-bubble-bg: #404040;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    transition: background-color 0.3s, color 0.3s;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Toolbar Styles */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--toolbar-bg);
+    color: var(--toolbar-text);
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+    z-index: 100;
+}
+
+.toolbar-left, .toolbar-center, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toolbar button {
+    background: transparent;
+    border: none;
+    color: var(--toolbar-text);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.toolbar button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .toolbar button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--dropdown-bg);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 110;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: var(--foreground-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dropdown-hover);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Comic Viewer Styles */
+.comic-viewer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--comic-bg);
+    overflow: hidden;
+    position: relative;
+}
+
+.comic-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    transform-origin: center center;
+}
+
+.comic-page {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    user-select: none;
+}
+
+.comic-page.active {
+    display: block;
+}
+
+.comic-page.hidden {
+    display: none;
+}
+
+.comic-panel {
+    position: absolute;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.comic-panel:hover {
+    border-color: var(--primary-color);
+}
+
+/* Drop Zone Styles */
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: 3px dashed var(--secondary-color);
+    border-radius: 10px;
+    color: var(--secondary-color);
+    padding: 20px;
+    text-align: center;
+    gap: 15px;
+}
+
+.drop-zone.dragover {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-color: var(--primary-color);
+}
+
+.drop-zone button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.drop-zone button:hover {
+    background-color: #0056b3;
+}
+
+/* Speech Bubble Styles */
+.speech-bubble {
+    position: absolute;
+    background-color: var(--bubble-bg);
+    border: 2px solid var(--bubble-border);
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 200px;
+    cursor: move;
+    z-index: 50;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: var(--bubble-bg) transparent transparent transparent;
+}
+
+.speech-bubble.thought {
+    border-radius: 20px;
+    background-color: var(--thought-bubble-bg);
+}
+
+.speech-bubble.thought::before {
+    display: none;
+}
+
+.speech-bubble.thought::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--thought-bubble-bg);
+    border-radius: 50%;
+}
+
+.speech-bubble.narrator {
+    border-radius: 0;
+    background-color: var(--narrator-bubble-bg);
+    font-style: italic;
+}
+
+.speech-bubble.narrator::before {
+    display: none;
+}
+
+/* Speech Bubble Editor */
+.speech-bubble-editor {
+    position: absolute;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background-color: var(--toolbar-bg);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    transition: bottom 0.3s ease;
+    z-index: 150;
+}
+
+.speech-bubble-editor.active {
+    bottom: 0;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.editor-content {
+    padding: 10px;
+}
+
+.editor-content textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    resize: none;
+    margin-bottom: 10px;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+}
+
+.editor-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.editor-controls button, .editor-controls select {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: var(--toolbar-bg);
+    color: var(--toolbar-text);
+    cursor: pointer;
+}
+
+/* Keyboard Shortcuts Panel */
+.keyboard-shortcuts {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: var(--toolbar-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    display: none;
+}
+
+.keyboard-shortcuts.active {
+    display: block;
+}
+
+.shortcuts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.shortcuts-content {
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.shortcuts-content ul {
+    list-style-type: none;
+}
+
+.shortcuts-content li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+kbd {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 8px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .toolbar-left, .toolbar-center, .toolbar-right {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .speech-bubble-editor {
+        width: 90%;
+    }
+
+    .keyboard-shortcuts {
+        width: 90%;
+    }
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--primary-color);
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Fullscreen Mode */
+.app-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background-color: var(--background-color);
+}
+
+/* Double Page Layout */
+.comic-container.double-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.comic-container.double-page .comic-page {
+    max-height: 100%;
+    max-width: 49%;
+}
+
+/* Manga Mode (Right to Left) */
+.comic-container.manga-mode {
+    flex-direction: row-reverse;
+}

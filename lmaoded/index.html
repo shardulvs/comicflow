@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button id="open-comic" title="Open Comic"><i class="fas fa-folder-open"></i></button>
+                <button id="save-state" title="Save State"><i class="fas fa-save"></i></button>
+                <button id="load-state" title="Load State"><i class="fas fa-upload"></i></button>
+                <div class="dropdown">
+                    <button class="dropbtn" title="Reading Mode"><i class="fas fa-book-open"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="western-mode">Western (Left to Right)</a>
+                        <a href="#" id="manga-mode">Manga (Right to Left)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-center">
+                <button id="prev-page" title="Previous Page"><i class="fas fa-chevron-left"></i></button>
+                <span id="page-info">Page 0 of 0</span>
+                <button id="next-page" title="Next Page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="toolbar-right">
+                <button id="toggle-dark-mode" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+                <button id="toggle-fullscreen" title="Toggle Fullscreen"><i class="fas fa-expand"></i></button>
+                <div class="dropdown">
+                    <button class="dropbtn" title="Zoom"><i class="fas fa-search-plus"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="zoom-in">Zoom In</a>
+                        <a href="#" id="zoom-out">Zoom Out</a>
+                        <a href="#" id="zoom-reset">Reset Zoom</a>
+                        <a href="#" id="fit-to-width">Fit to Width</a>
+                        <a href="#" id="fit-to-height">Fit to Height</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn" title="Layout"><i class="fas fa-th-large"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#" id="single-page">Single Page</a>
+                        <a href="#" id="double-page">Double Page</a>
+                        <a href="#" id="auto-detect">Auto Detect Panels</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comic Viewer -->
+        <div class="comic-viewer">
+            <div id="comic-container" class="comic-container">
+                <!-- Comic pages will be inserted here -->
+                <div class="drop-zone" id="drop-zone">
+                    <p>Drag & Drop Comic Files Here</p>
+                    <p>or</p>
+                    <button id="file-select">Select Files</button>
+                    <input type="file" id="file-input" accept=".jpg, .jpeg, .png, .gif, .webp" multiple hidden>
+                </div>
+            </div>
+        </div>
+
+        <!-- Speech Bubble Editor -->
+        <div class="speech-bubble-editor" id="speech-bubble-editor">
+            <div class="editor-header">
+                <span>Speech Bubble Editor</span>
+                <button id="close-editor"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="editor-content">
+                <textarea id="bubble-text" placeholder="Enter speech text..."></textarea>
+                <div class="editor-controls">
+                    <button id="add-bubble">Add Bubble</button>
+                    <select id="bubble-type">
+                        <option value="speech">Speech</option>
+                        <option value="thought">Thought</option>
+                        <option value="narrator">Narrator</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard Shortcuts Guide -->
+        <div class="keyboard-shortcuts" id="keyboard-shortcuts">
+            <div class="shortcuts-header">
+                <span>Keyboard Shortcuts</span>
+                <button id="close-shortcuts"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="shortcuts-content">
+                <ul>
+                    <li><kbd>→</kbd> or <kbd>Space</kbd>: Next Page</li>
+                    <li><kbd>←</kbd> or <kbd>Backspace</kbd>: Previous Page</li>
+                    <li><kbd>Home</kbd>: First Page</li>
+                    <li><kbd>End</kbd>: Last Page</li>
+                    <li><kbd>+</kbd>: Zoom In</li>
+                    <li><kbd>-</kbd>: Zoom Out</li>
+                    <li><kbd>0</kbd>: Reset Zoom</li>
+                    <li><kbd>F</kbd>: Toggle Fullscreen</li>
+                    <li><kbd>D</kbd>: Toggle Dark Mode</li>
+                    <li><kbd>S</kbd>: Save State</li>
+                    <li><kbd>L</kbd>: Load State</li>
+                    <li><kbd>1</kbd>: Single Page Layout</li>
+                    <li><kbd>2</kbd>: Double Page Layout</li>
+                    <li><kbd>M</kbd>: Toggle Manga/Western Mode</li>
+                    <li><kbd>P</kbd>: Auto Detect Panels</li>
+                    <li><kbd>?</kbd>: Show/Hide Shortcuts</li>
+                    <li><kbd>B</kbd>: Open Speech Bubble Editor</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
